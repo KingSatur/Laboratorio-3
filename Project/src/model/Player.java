@@ -18,6 +18,11 @@ public class Player {
 		this.assistencesForMatch = assitencesForMatch;
 		this.locksForMatch = locksForMatch;
 	}
+	
+	public Player(String nombre, int  edad) {
+		this.name = nombre;
+		this.age = edad;
+	}
 
 	public String getName() {
 		return name;
