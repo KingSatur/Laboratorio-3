@@ -4,7 +4,7 @@ import interfaces.*;
 
 public class BTS<K extends Comparable<K>, V> implements iBST<K, V> {
 
-	private BTSNode node;
+	private BTSNode root;
 	
 	public BTS() {}
 
@@ -15,12 +15,36 @@ public class BTS<K extends Comparable<K>, V> implements iBST<K, V> {
 
 	@Override
 	public K minimum() {
-		return null;
+		K iKey = null;
+		if(root!=null) {
+			BTSNode temporary = root;
+			while(root.getIzq()!=null) {
+				temporary = root.getIzq();
+			}
+			iKey = (K) temporary.getKey();
+		}
+		return iKey;
 	}
 
 	@Override
 	public K maximum() {
-		return null;
+		K iKey = null;
+		if(root!=null) {
+			if(root.getDer() == null)
+				iKey = (K) root.getKey();
+			else
+				iKey = (K)max(root);
+		}
+		return iKey;
+	}
+	
+	public K max(BTSNode node) {
+		K iKey = null;
+		BTSNode temporary = node;
+		while(temporary.getDer()!=null)
+			temporary = temporary.getDer();
+		
+		return iKey = (K)temporary.getDer().getKey();
 	}
 
 	@Override
