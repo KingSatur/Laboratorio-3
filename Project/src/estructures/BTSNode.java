@@ -7,7 +7,7 @@ public class BTSNode<K extends Comparable<K>, V> {
 	private V Value;
 	private BTSNode izq;
 	private BTSNode der;
-	private BTSNode p;
+	private BTSNode father;
 	
 	
 	public BTSNode(K Key, V Value) {
@@ -47,4 +47,11 @@ public class BTSNode<K extends Comparable<K>, V> {
 		der = node;
 	}
 	
+	public BTSNode getFather() {
+		return father;
+	}
+	
+	public void setFather(BTSNode node) {
+		this.father = node;
+	}
 }
