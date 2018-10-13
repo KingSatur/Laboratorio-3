@@ -52,6 +52,17 @@ public class BTS<K extends Comparable<K>, V> implements iBST<K, V> {
 		}
 		return iKey;
 	}
+	
+	@Override
+	public K minimum(BTSNode node) {
+		K iKey = null;
+		BTSNode temporary = node;
+		
+		while(temporary.getIzq()!=null)
+			temporary = temporary.getIzq();
+		
+		return iKey = (K)temporary.getIzq().getKey();
+	}
 
 	@Override
 	public K maximum() {
@@ -141,17 +152,93 @@ public class BTS<K extends Comparable<K>, V> implements iBST<K, V> {
 	
 	@Override
 	public void delete(K key) {
+		BTSNode toDelete = (BTSNode)search(key);
+		// Case special when is the root
+		if(toDelete.equals(root)) {
+			removeRoot();
+		}
+		// First case if is sheet
+		else if(isSheet(toDelete)) {
+			removeSheet(toDelete);
+		}
+		// Second case when the node toDelete have two or one son
+		else {
+			BTSNode sucessor = sucessor((K)toDelete.getKey());
+			sucessor.setIzq(toDelete.getIzq());
+			sucessor.setDer(toDelete.getDer());
+			if(toDelete.getFather().getKey().compareTo(toDelete.getKey()) > 0) {
+				toDelete.getFather().setIzq(sucessor);
+			}
+			else {
+				toDelete.getFather().setDer(sucessor);
+			}
+		}
+	}
+	
+	public void removeRoot() {
+		if(isSheet(root)) {
+			root = null;
+		}
+		else {
+			BTSNode sucessor = (BTSNode)sucessor((K)root.getKey());
+			if(root.getDer()!=null)
+				sucessor.setIzq(root.getIzq());
+			else if(root.getIzq()!=null)
+				sucessor.setDer(root.getDer());
+			root = sucessor;
+		}
+	}
+	
+	public void removeSheet(BTSNode current) {
+		if(current.getFather().getKey().compareTo(current.getKey()) > 0) {
+			current.getFather().setIzq(null);
+		}
+		else {
+			current.getFather().setDer(null);
+		}
+	}
+	
+	public void removeCase2(BTSNode current) {
+	
+	}
+	
+	public void removeCase3(BTSNode current) {
 		
 	}
 
 	@Override
 	public BTSNode sucessor(K key) {
-		return null;
+		BTSNode search = search(key, root);
+		BTSNode sucessor = null;
+		if(search!=null) {
+			if(search.getDer()!=null) {
+				sucessor = (BTSNode) search(minimum(sucessor.getDer()));
+				delete((K)sucessor.getKey());
+			}
+			else if(search.getIzq()!=null) {
+				sucessor = (BTSNode) search(maximum(sucessor.getIzq()));
+				delete((K)sucessor.getKey());
+			}
+		}
+		return sucessor;
 	}
 
 	@Override
 	public BTSNode predecessor(K key) {
-		return null;
+		BTSNode search = search(key, root);
+		BTSNode predecessor = null;
+		if(search!=null)
+			predecessor = search.getFather();
+		return predecessor;
 	}
+
+	@Override
+	public boolean isSheet(BTSNode current) {
+		boolean value = false;
+		if(current.getIzq()==null && current.getDer()==null)
+			value = true;
+		return value;
+	}
+	
 	
 }

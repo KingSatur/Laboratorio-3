@@ -6,6 +6,7 @@ public interface iBST<K, V>{
 	public V search(K key);
 	public BTSNode search(K key, BTSNode root); // Support method for method search().
 	public K minimum();
+	public K minimum(BTSNode node);
 	public K maximum();
 	public K maximum(BTSNode node); // Support method for method maximum().
 	public void insertIterative(K key, V value); // First option to add an element. (Iterative)
@@ -14,5 +15,6 @@ public interface iBST<K, V>{
 	public void delete(K key);
 	public BTSNode sucessor(K key);
 	public BTSNode predecessor(K key);
+	public boolean isSheet(BTSNode current);
 	
 }
