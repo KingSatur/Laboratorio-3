@@ -45,8 +45,8 @@ public class BTS<K extends Comparable<K>, V> implements iBST<K, V> {
 		K iKey = null;
 		if(root!=null) {
 			BTSNode temporary = root;
-			while(root.getIzq()!=null) {
-				temporary = root.getIzq();
+			while(temporary.getIzq()!=null) {
+				temporary = temporary.getIzq();
 			}
 			iKey = (K) temporary.getKey();
 		}
