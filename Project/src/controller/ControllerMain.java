@@ -18,7 +18,21 @@ import model.Equipo;
 
 public class ControllerMain implements Initializable {
 	
-    @FXML
+	private Stage myStage;
+	
+	public ControllerMain(Stage stage) {
+		myStage = stage;
+	}
+	
+    public Stage getMyStage() {
+		return myStage;
+	}
+
+	public void setMyStage(Stage myStage) {
+		this.myStage = myStage;
+	}
+
+	@FXML
     private TableView<?> tablePlayer;
 
     @FXML
@@ -26,14 +40,21 @@ public class ControllerMain implements Initializable {
 
     @FXML
     void searchPressed(ActionEvent event) throws IOException {
-    	Stage primaryStage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("/view/SearchWindow.fxml"));
-		ControllerMain m = new ControllerMain();
+    	Stage stage = new Stage();
+		ControllerSearchWindow controller =  new ControllerSearchWindow(stage);
+		FXMLLoader loader = new FXMLLoader(
+			    getClass().getResource(
+			        "/view/SearchWindow.fxml"
+			    )
+			);
+		controller.setMainStage(myStage);
+		loader.setController(controller);
+		Parent root = loader.load();
 		Scene scene = new Scene(root);
-		primaryStage.setResizable(false);
-		primaryStage.setScene(scene);
-		primaryStage.setTitle("Bascketball");
-		primaryStage.show();
+		stage.setResizable(false);
+		stage.setScene(scene);
+		stage.setTitle("Bascketball");
+		stage.show();
     }
 
 	@Override

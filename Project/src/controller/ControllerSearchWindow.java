@@ -6,10 +6,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 public class ControllerSearchWindow {
 
-
+	private Stage myStage;
+	
+	public ControllerSearchWindow(Stage stage) {
+		this.myStage = stage;
+	}
+	
+	public void setMainStage(Stage stageOne) {
+		myStage.initOwner(stageOne);
+	}
+	
     @FXML
     private ComboBox<?> staticOne;
 

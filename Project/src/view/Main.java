@@ -17,13 +17,20 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
-		ControllerMain m = new ControllerMain();
+		ControllerMain controller =  new ControllerMain(primaryStage);
+		FXMLLoader loader = new FXMLLoader(
+			    getClass().getResource(
+			        "Main.fxml"
+			    )
+			);
+			loader.setController(controller);
+		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Bascketball");
 		primaryStage.show();
+		
 	}
 
 	public static void main(String[] args) {
