@@ -164,8 +164,14 @@ public class BTS<K extends Comparable<K>, V> implements iBST<K, V> {
 		// Second case when the node toDelete have two or one son
 		else {
 			BTSNode sucessor = sucessor((K)toDelete.getKey());
-			sucessor.setIzq(toDelete.getIzq());
-			sucessor.setDer(toDelete.getDer());
+			if(sucessor == null)
+				sucessor = (BTSNode) predecessor((K)toDelete.getKey());
+			
+			if(toDelete.getDer()!=null)
+				sucessor.setDer(toDelete.getDer());
+			if(toDelete.getIzq()!=null)
+				sucessor.setIzq(toDelete.getIzq());
+			
 			if(toDelete.getFather().getKey().compareTo(toDelete.getKey()) > 0) {
 				toDelete.getFather().setIzq(sucessor);
 			}
@@ -181,11 +187,21 @@ public class BTS<K extends Comparable<K>, V> implements iBST<K, V> {
 		}
 		else {
 			BTSNode sucessor = (BTSNode)sucessor((K)root.getKey());
-			if(root.getDer()!=null)
-				sucessor.setIzq(root.getIzq());
-			else if(root.getIzq()!=null)
-				sucessor.setDer(root.getDer());
-			root = sucessor;
+			if(sucessor != null) {
+				if(root.getIzq()!=null)
+					sucessor.setIzq(root.getIzq());
+				if(root.getDer()!=null)
+					sucessor.setDer(root.getDer());
+				root = sucessor;
+			}
+			else {
+				BTSNode predecessor = (BTSNode)predecessor((K)root.getKey());
+				if(root.getDer()!=null) 
+					predecessor.setDer(root.getDer());
+				if(root.getIzq()!=null)
+					predecessor.setIzq(root.getIzq());
+				root = predecessor;
+			}
 		}
 	}
 	
@@ -197,14 +213,6 @@ public class BTS<K extends Comparable<K>, V> implements iBST<K, V> {
 			current.getFather().setDer(null);
 		}
 	}
-	
-	public void removeCase2(BTSNode current) {
-	
-	}
-	
-	public void removeCase3(BTSNode current) {
-		
-	}
 
 	@Override
 	public BTSNode sucessor(K key) {
@@ -212,11 +220,7 @@ public class BTS<K extends Comparable<K>, V> implements iBST<K, V> {
 		BTSNode sucessor = null;
 		if(search!=null) {
 			if(search.getDer()!=null) {
-				sucessor = (BTSNode) search(minimum(sucessor.getDer()));
-				delete((K)sucessor.getKey());
-			}
-			else if(search.getIzq()!=null) {
-				sucessor = (BTSNode) search(maximum(sucessor.getIzq()));
+				sucessor = (BTSNode) search(minimum(search.getDer()));
 				delete((K)sucessor.getKey());
 			}
 		}
@@ -227,8 +231,13 @@ public class BTS<K extends Comparable<K>, V> implements iBST<K, V> {
 	public BTSNode predecessor(K key) {
 		BTSNode search = search(key, root);
 		BTSNode predecessor = null;
-		if(search!=null)
-			predecessor = search.getFather();
+		if(search!=null) {
+			if(search.getIzq()!=null) {
+				predecessor = (BTSNode) search(maximum(search.getIzq()));
+				delete((K)predecessor.getKey());
+			}
+		}
+			
 		return predecessor;
 	}
 
