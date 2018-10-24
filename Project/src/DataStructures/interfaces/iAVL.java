@@ -7,7 +7,7 @@ public interface iAVL<K,V> {
 	public NodeBST search(K key);
 	public void delete(K key);
 	public void insert(NodeBST z);
-	public boolean isSheet(NodeBST x);
+	public boolean isSheet(K key);
 	public NodeBST successor(K key);
 	public NodeBST predecessor(K key);
 	public NodeBST minimumTree();

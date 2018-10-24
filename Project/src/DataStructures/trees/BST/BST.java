@@ -2,7 +2,6 @@
 package DataStructures.trees.BST;
 
 import DataStructures.interfaces.iBST;
-import DataStructures.trees.RBT.NodeRBT;
 
 public class BST<K extends Comparable<K>, V> implements iBST<K, V> {
 
@@ -74,7 +73,7 @@ public class BST<K extends Comparable<K>, V> implements iBST<K, V> {
 			NodeBST<K, V> father = toDelete.getFather();
 
 			// Case 1
-			if (isSheet(toDelete)) {
+			if (isSheet(toDelete.getKey())) {
 				if (father.getL() != nil && father.getL() == toDelete)
 					father.setL(nil);
 				if (father.getR() != nil && father.getR() == toDelete)
@@ -197,7 +196,8 @@ public class BST<K extends Comparable<K>, V> implements iBST<K, V> {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public boolean isSheet(NodeBST x) {
+	public boolean isSheet(K key) {
+		NodeBST x = search(key);
 		return (x.getL() == nil && x.getR() == nil) ? true : false;
 	}
 
@@ -241,17 +241,17 @@ public class BST<K extends Comparable<K>, V> implements iBST<K, V> {
 		return x;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void inOrder(NodeBST x) {
-		if (x != nil) {
-			inOrder(x.getL());
-			String papa = null;
-			if (x.getFather() != null) {
-				papa = x.getFather().getValue() + "";
-			}
-			System.out.println(x.getKey() + " papa :" + papa);
-			inOrder(x.getR());
-		}
-
-	}
+//	@SuppressWarnings("rawtypes")
+//	public void inOrder(NodeBST x) {
+//		if (x != nil) {
+//			inOrder(x.getL());
+//			String papa = null;
+//			if (x.getFather() != null) {
+//				papa = x.getFather().getValue() + "";
+//			}
+//			System.out.println(x.getKey() + " papa :" + papa);
+//			inOrder(x.getR());
+//		}
+//
+//	}
 }

@@ -1,7 +1,6 @@
 package DataStructures.trees.AVL;
 
 import DataStructures.trees.general.TreesWithRotations;
-import DataStructures.trees.BST.NodeBST;
 
 
 public class AVL<K extends Comparable<K>, V> extends TreesWithRotations<K, V> {
