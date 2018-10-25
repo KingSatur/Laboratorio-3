@@ -20,13 +20,16 @@ import DataStructures.trees.RBT.RBT;
 
 public class Fiba implements Serializable{
 
+	
 	private Hashtable<Integer, LinkedList<BST<Integer, String>>> forestYears;
+	private LinkedList<BST<Integer, String>> mainForest;
 	
 	public Fiba() {
 		forestYears = new Hashtable<Integer, LinkedList<BST<Integer, String>>>();
+		mainForest = new LinkedList<BST<Integer,String>>();
 	}
 	
-	public void fillForest() throws IOException {
+	public void fillHashForest() throws IOException {
 		
 		for(int i = 1978; i < 2017; i ++) {
 			LinkedList<BST<Integer,String>> m = new LinkedList<BST<Integer,String>>();
@@ -52,7 +55,11 @@ public class Fiba implements Serializable{
 		}
 	}
 
-	
+	public void fillMainForest() {
+		
+		
+		
+	}
 	
 	public void makeTree(BST<Integer, String> treeToChargue, int year, int posParameter) throws IOException {
 		
@@ -117,7 +124,7 @@ public class Fiba implements Serializable{
 		
 		Fiba f = new Fiba();
 //		f.filesGenerator("data/data2.csv");
-		f.fillForest();
+		f.fillHashForest();
 		f.serializar();
 		int x = 0;
 		int y = x + 10;
