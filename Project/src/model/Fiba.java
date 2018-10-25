@@ -39,12 +39,13 @@ public class Fiba {
 			m.add(new AVL<Integer, String>());
 			//SEGUNDO AVL GUARDA POR BLOQUEOS
 			m.add(new AVL<Integer, String>());
+			
 			forestYears.put(i, m);
 		}
 	}
 	
 	
-	public void makeForest(BST<Integer, String> treeToChargue, int year, int posParameter) throws IOException {
+	public void makeTree(BST<Integer, String> treeToChargue, int year, int posParameter) throws IOException {
 		
 		//Directorio donde deseo buscar
 		File directoryToSearch = new File("data/" + year);
