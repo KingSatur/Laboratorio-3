@@ -155,18 +155,7 @@ public class AVL<K extends Comparable<K>, V> extends TreesWithRotations<K, V> {
 		}
 	}
 	
-	public void inOrden(NodeAVL x) {
-		if (x != nil) {
-			inOrden((NodeAVL) x.getL());
-			String papa = null;
-			if (x.getFather() != null) {
-				papa = x.getFather().getValue() + "";
-			}
-			System.out.println(x.getKey() + " papa :" + papa );
-			inOrden((NodeAVL) x.getR());
-		}
 
-	}
 	
 	
 	
