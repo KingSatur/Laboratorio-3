@@ -1,10 +1,11 @@
 package DataStructures.trees.AVL;
 
+import DataStructures.interfaces.iAVL;
 import DataStructures.trees.AVL.*;
 import DataStructures.trees.RBT.NodeRBT;
 import DataStructures.trees.general.TreesWithRotations;
 
-public class AVL<K extends Comparable<K>, V> extends TreesWithRotations<K, V> {
+public class AVL<K extends Comparable<K>, V> extends TreesWithRotations<K, V> implements iAVL<K,V>{
 
 	private NodeAVL nil;
 
