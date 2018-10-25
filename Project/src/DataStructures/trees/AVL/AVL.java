@@ -4,7 +4,6 @@ import DataStructures.trees.AVL.*;
 import DataStructures.trees.RBT.NodeRBT;
 import DataStructures.trees.general.TreesWithRotations;
 
-
 public class AVL<K extends Comparable<K>, V> extends TreesWithRotations<K, V> {
 
 	private NodeAVL nil;
@@ -23,7 +22,6 @@ public class AVL<K extends Comparable<K>, V> extends TreesWithRotations<K, V> {
 
 	}
 
-
 	public void insert(K key, V value) {
 
 		if (key != null && value != null) {
@@ -34,131 +32,127 @@ public class AVL<K extends Comparable<K>, V> extends TreesWithRotations<K, V> {
 	}
 
 	private void insertBalance(NodeAVL<K, V> z) {
-		NodeAVL<K,V> nodeInsert = z;
-		NodeAVL<K,V> father = (NodeAVL<K, V>) z.getFather();
-		if(father!=nil) {
+		NodeAVL<K, V> nodeInsert = z;
+		NodeAVL<K, V> father = (NodeAVL<K, V>) z.getFather();
+		if (father != nil) {
 			do {
-		
-				NodeAVL<K,V> left = (NodeAVL<K, V>) father.getL();
-				
-				 if (left != nil && nodeInsert.getKey().compareTo(left.getKey())==0) {  
-					 
-					 if (father.getBalance() == 1) { 
-						
-						 if (nodeInsert.getBalance() == -1) { 
-							 leftRotate((NodeAVL)nodeInsert); 
-							 nodeInsert.updateFactorBalance();
-							 ((NodeAVL)nodeInsert.getFather()).updateFactorBalance();
-						 }
-			
-						 rightRotate(father);
-						 
-						 father.updateFactorBalance();
-						 
-						 ((NodeAVL)father.getFather()).updateFactorBalance();
-						 break; 
-					 }
-					 if (father.getBalance() == -1) {
-						 father.setBalance(0); 
-						 break; 
-					 }
-					 
-					 father.setBalance(1); 
-				 } 
-				 else { 
-					 if (father.getBalance() == -1) { 
-						 
-						 if (nodeInsert.getBalance() == 1) { 
-							 rightRotate(nodeInsert); 
-							 nodeInsert.updateFactorBalance();
-							 ((NodeAVL)nodeInsert.getFather()).updateFactorBalance();
-						 }
-						
-						 leftRotate(father);
-						 father.updateFactorBalance();
-						 ((NodeAVL)father.getFather()).updateFactorBalance();
-						 break; 
-					 }
-					 if (father.getBalance() == 1) {
-						 father.setBalance(0); 
-						 break; 
-					 }
-					 father.setBalance(-1); 
-				 }
-				 nodeInsert = father;
-				 father = (NodeAVL<K, V>) nodeInsert.getFather();
-			}while(father!=nil);
+
+				NodeAVL<K, V> left = (NodeAVL<K, V>) father.getL();
+
+				if (left != nil && nodeInsert.getKey().compareTo(left.getKey()) == 0) {
+
+					if (father.getBalance() == 1) {
+
+						if (nodeInsert.getBalance() == -1) {
+							leftRotate((NodeAVL) nodeInsert);
+							nodeInsert.updateFactorBalance();
+							((NodeAVL) nodeInsert.getFather()).updateFactorBalance();
+						}
+
+						rightRotate(father);
+
+						father.updateFactorBalance();
+
+						((NodeAVL) father.getFather()).updateFactorBalance();
+						break;
+					}
+					if (father.getBalance() == -1) {
+						father.setBalance(0);
+						break;
+					}
+
+					father.setBalance(1);
+				} else {
+					if (father.getBalance() == -1) {
+
+						if (nodeInsert.getBalance() == 1) {
+							rightRotate(nodeInsert);
+							nodeInsert.updateFactorBalance();
+							((NodeAVL) nodeInsert.getFather()).updateFactorBalance();
+						}
+
+						leftRotate(father);
+						father.updateFactorBalance();
+						((NodeAVL) father.getFather()).updateFactorBalance();
+						break;
+					}
+					if (father.getBalance() == 1) {
+						father.setBalance(0);
+						break;
+					}
+					father.setBalance(-1);
+				}
+				nodeInsert = father;
+				father = (NodeAVL<K, V>) nodeInsert.getFather();
+			} while (father != nil);
 		}
 	}
+
 	@SuppressWarnings("unchecked")
 	public void remove(K key) {
 		NodeAVL x = (NodeAVL) search(key);
 		NodeAVL father = (NodeAVL) x.getFather();
+		boolean leftChildren = x == father.getL();
 		super.delete(key);		
-		deleteBalance((NodeAVL) father);	
+		balance(x);
 	}
-	
-	/**
-	 * @param toDelete
-	 */
-	@SuppressWarnings("unchecked")
-	private void deleteBalance(NodeAVL N) {
-		NodeAVL G = null;
-		for(NodeAVL X = (NodeAVL) N.getFather(); X != nil; X = G) { 
-		    G = (NodeAVL) X.getFather(); 
-		    if (N == X.getL()) {
-		        if (X.getBalance() < 0) { 
-		        	NodeAVL Z = (NodeAVL) X.getR();
-		            int b = Z.getBalance();
-		            if (b > 0) {
-		            	rightRotate(Z);
-		            	Z.updateFactorBalance();
-		            	leftRotate(X);
-		            	X.updateFactorBalance();
-		            }else {
-		            	System.out.println("HERE");
-		            	leftRotate(X);
-		            	X.updateFactorBalance();
-		            }
-		        } else {
-		            if (X.getBalance() == 0) {
-		                X.setBalance(-1);
-		                break; 
-		            }
-		            N = X;
-		            N.setBalance(0);
-		            continue;
-		        }
-		    } else { 
-		        if (X.getBalance() > 0) {
-		        	NodeAVL Z = (NodeAVL) X.getL();
-		            int b = Z.getBalance();
-		            if (b < 0) {
-		            	leftRotate(Z);
-		            	Z.updateFactorBalance();
-		            	rightRotate(X);
-		            	X.updateFactorBalance();
-		            }else {
-		            	rightRotate(X);
-		            	X.updateFactorBalance();
-		            }
-		        } else {
-		            if (X.getBalance() == 0) {
-		            	X.setBalance(1);
-		                break; 
-		            }
-		            N = X;
-		            N.setBalance(0);
-		            continue;
-		        }
-		    }
+
+	private void balance(NodeAVL x) {
+		NodeAVL error = balanceFactorError();
+		if (error != nil) {
+			if (error.getBalance() == 2) {
+				rightRotate(error);
+			}
+			if (error.getBalance() == -2) {
+				leftRotate(error);
+			}
+			balance((NodeAVL) error.getFather());
 		}
 	}
-	
 
-	
-	
-	
+	private NodeAVL balanceFactorError() {
+		boolean stop = false;
+		NodeAVL x = (NodeAVL) root;
+		while (x != nil  && !stop) {
+			x.updateFactorBalance();
+			if((x.getBalance() >= -1 && x.getBalance() <= 1)) {
+				x = (NodeAVL) x.getR();
+			}else {
+				stop = true;
+			}
+		}
+		
+		if(x != nil) {
+			return x;
+		}else {
+			x = (NodeAVL) root;
+		}
+
+		boolean stop1 = false;
+		while (x != nil  && !stop1) {
+			x.updateFactorBalance();
+			if((x.getBalance() >= -1 && x.getBalance() <= 1)) {
+				x = (NodeAVL) x.getL();
+			}else {
+				stop1 = true;
+			}
+		}
+		return x;
+	}
+
+	public void inOrden(NodeAVL x) {
+		if (x != nil) {
+			inOrden((NodeAVL) x.getL());
+			String papa = null;
+			if (x.getFather() != null) {
+				papa = x.getFather().getValue() + "";
+			}
+			System.out.println(x.getKey() + " papa :" + papa);
+			inOrden((NodeAVL) x.getR());
+		}
+
+	}
+
 
 
 }
