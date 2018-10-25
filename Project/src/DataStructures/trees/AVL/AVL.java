@@ -1,5 +1,7 @@
 package DataStructures.trees.AVL;
 
+import DataStructures.trees.AVL.*;
+import DataStructures.trees.RBT.NodeRBT;
 import DataStructures.trees.general.TreesWithRotations;
 
 
@@ -100,56 +102,98 @@ public class AVL<K extends Comparable<K>, V> extends TreesWithRotations<K, V> {
 	 * @param toDelete
 	 */
 	@SuppressWarnings("unchecked")
-	private void deleteBalance(NodeAVL toDelete) {
-		NodeAVL x = null;
-		for(NodeAVL aux = (NodeAVL) toDelete.getFather(); aux != null; aux = x) { 
-		    x = (NodeAVL) aux.getFather(); 
-		    if (toDelete == aux.getL()) {
-		        if (aux.getBalance() < 0) { 
-		        	NodeAVL y = (NodeAVL) aux.getR();
-		            int b = y.getBalance();
+	private void deleteBalance(NodeAVL N) {
+		NodeAVL G = null;
+		for(NodeAVL X = (NodeAVL) N.getFather(); X != nil; X = G) { 
+		    G = (NodeAVL) X.getFather(); 
+		    if (N == X.getL()) {
+		        if (X.getBalance() < 0) { 
+		        	NodeAVL Z = (NodeAVL) X.getR();
+		            int b = Z.getBalance();
 		            if (b > 0) {
-		            	rightRotate(y);
-		            	y.updateFactorBalance();
-		            	leftRotate(aux);
-		            	aux.updateFactorBalance();
+		            	rightRotate(Z);
+		            	Z.updateFactorBalance();
+		            	leftRotate(X);
+		            	X.updateFactorBalance();
 		            }else {
-		            	leftRotate(aux);
-		            	aux.updateFactorBalance();
+		            	System.out.println("HERE");
+		            	leftRotate(X);
+		            	X.updateFactorBalance();
 		            }
 		        } else {
-		            if (aux.getBalance() == 0) {
-		                aux.setBalance(-1);
+		            if (X.getBalance() == 0) {
+		                X.setBalance(-1);
 		                break; 
 		            }
-		            toDelete = aux;
-		            toDelete.setBalance(0);
+		            N = X;
+		            N.setBalance(0);
 		            continue;
 		        }
 		    } else { 
-		        if (aux.getBalance() > 0) {
-		            NodeAVL Z = (NodeAVL) aux.getL();
+		        if (X.getBalance() > 0) {
+		        	NodeAVL Z = (NodeAVL) X.getL();
 		            int b = Z.getBalance();
 		            if (b < 0) {
 		            	leftRotate(Z);
 		            	Z.updateFactorBalance();
-		            	rightRotate(aux);
-		            	aux.updateFactorBalance();
+		            	rightRotate(X);
+		            	X.updateFactorBalance();
 		            }else {
-		            	rightRotate(aux);
-		            	aux.updateFactorBalance();
+		            	rightRotate(X);
+		            	X.updateFactorBalance();
 		            }
 		        } else {
-		            if (aux.getBalance() == 0) {
-		            	aux.setBalance(1);
+		            if (X.getBalance() == 0) {
+		            	X.setBalance(1);
 		                break; 
 		            }
-		            toDelete = aux;
-		            toDelete.setBalance(0);
+		            N = X;
+		            N.setBalance(0);
 		            continue;
 		        }
 		    }
 		}
+	}
+	
+	public void inOrden(NodeAVL x) {
+		if (x != nil) {
+			inOrden((NodeAVL) x.getL());
+			String papa = null;
+			if (x.getFather() != null) {
+				papa = x.getFather().getValue() + "";
+			}
+			System.out.println(x.getKey() + " papa :" + papa );
+			inOrden((NodeAVL) x.getR());
+		}
+
+	}
+	
+	
+	public static void main(String[] args) {
+		AVL<Integer, Integer> avl = new AVL<>();
+		int[] data = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+		for (int i = 0; i < data.length; i++) {
+			avl.insert(data[i], data[i]);			
+		}
+		
+		
+//		avl.remove(1);
+//		avl.remove(3);
+//		avl.remove(5);
+//		avl.remove(2);
+//		avl.remove(6);
+//		avl.remove(4);
+//		
+		avl.inOrden((NodeAVL) avl.getRoot());
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 
