@@ -1,9 +1,11 @@
 
 package DataStructures.trees.BST;
 
+import java.io.Serializable;
+
 import DataStructures.interfaces.iBST;
 
-public class BST<K extends Comparable<K>, V> implements iBST<K, V> {
+public class BST<K extends Comparable<K>, V> implements iBST<K, V>, Serializable {
 
 	protected NodeBST<K, V> root;
 	

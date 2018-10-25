@@ -1,7 +1,9 @@
 
 package DataStructures.trees.BST;
 
-public class NodeBST<K extends Comparable<K>, V>  {
+import java.io.Serializable;
+
+public class NodeBST<K extends Comparable<K>, V> implements Serializable {
 
 	private K key;
 	private V value;
